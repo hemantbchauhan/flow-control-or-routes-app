@@ -15,7 +15,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 
     
     <ws:consumer-config name="Web_Service_Consumer" wsdlLocation="http://ilt.mulesoft-training.com/essentials/delta?wsdl" service="TicketServiceService" port="TicketServicePort" serviceAddress="http://training.cloudhub.io/essentials/delta" doc:name="Web Service Consumer"/>
-    <http:request-config name="UnitedAirlines_Connection" host="ilt.mulesoft-training.com" port="80" doc:name="HTTP Request Configuration"/>
+    <http:request-config name="UnitedAirlines_Connection" host="ilt.mulesoft-training.com" port="${ilt.mule.training.port}" doc:name="HTTP Request Configuration"/>
      
      
     <flow name="scatter-gather-exampleFlow">
