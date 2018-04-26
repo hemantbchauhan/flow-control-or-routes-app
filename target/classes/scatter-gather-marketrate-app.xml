@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ws="http://www.mulesoft.org/schema/mule/ws"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.9.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+<!-- 
+	<flow name="scatter-gather-exampleFlow">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="sgpoc" doc:name="HTTP"/>
+		<object-to-string-transformer doc:name="Object to String"/>
+		<scatter-gather doc:name="Scatter-Gather">
+			<custom-aggregation-strategy class="com.hemant.CustomSGAggregationStrategy"/>
+			<processor-chain>
+				<logger message="#[payload]" level="INFO" doc:name="Logger"/>
+				<ws:consumer config-ref="Web_Service_Consumer" operation="getTokyoMarketRate" doc:name="Tokyo Market Rate"/>
+				<dw:transform-message metadata:id="4250084e-3fc9-448a-8bf4-f015d0916d1d" doc:name="Transform Message">
+					<dw:set-payload>
+						<![CDATA[%dw 1.0
+						%output application/java
+						%namespace ns0 http://ws.example.poc.com/
+						
+						payload.ns0#getTokyoMarketRateResponse.return as :string]]>
+					</dw:set-payload>
+				</dw:transform-message>
+				<set-payload value="#['Tokyo,' + payload]" doc:name="Set Payload"/>
+				<logger message="#[payload]" level="INFO" doc:name="Logger"/>
+			</processor-chain>
+			<processor-chain>
+				<logger message="#[payload]" level="INFO" doc:name="Logger"/>
+				<ws:consumer config-ref="Web_Service_Consumer" operation="getNewYorkMarketRate" doc:name="New York Market Rate"/>
+				<dw:transform-message metadata:id="a94c93e1-404e-4849-9d29-bd17fc05482b" doc:name="Transform Message">
+					<dw:set-payload>
+						<![CDATA[%dw 1.0
+						%output application/java
+						%namespace ns0 http://ws.example.poc.com/
+						
+						payload.ns0#getNewYorkMarketRateResponse.return as :string]]>
+					</dw:set-payload>
+				</dw:transform-message>
+				<set-payload value="#['NewYork,' + payload]" doc:name="Set Payload"/>
+				<logger message="#[payload ]" level="INFO" doc:name="Logger"/>
+			</processor-chain>
+		</scatter-gather>
+		<logger message="#[payload]" level="INFO" doc:name="Logger"/>
+	</flow>
+	<flow name="NewYorkRate">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="newyorkrate" doc:name="HTTP"/>
+		<ws:consumer config-ref="Web_Service_Consumer" operation="getNewYorkMarketRate" doc:name="Web Service Consumer"/>
+		<dw:transform-message metadata:id="2663a4b2-9427-4f79-b212-6cab941c8a9d" doc:name="Transform Message">
+			<dw:set-payload>
+				<![CDATA[%dw 1.0
+				%output application/java
+				%namespace ns0 http://ws.example.poc.com/
+				
+				payload.ns0#getNewYorkMarketRateResponse.return as :string]]>
+			</dw:set-payload>
+		</dw:transform-message>
+	</flow>
+	<flow name="TokyoRate">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="tokyorate" doc:name="HTTP"/>
+		<ws:consumer config-ref="Web_Service_Consumer" operation="getTokyoMarketRate" doc:name="Web Service Consumer"/>
+		<dw:transform-message metadata:id="95e2d8f2-f447-433a-84a5-fb756aa2857e" doc:name="Transform Message">
+			<dw:set-payload>
+				<![CDATA[%dw 1.0
+				%output application/java
+				%namespace ns0 http://ws.example.poc.com/
+				
+				payload.ns0#getTokyoMarketRateResponse.return as :string]]>
+			</dw:set-payload>
+		</dw:transform-message>
+	</flow>
+-->
+
+
+</mule>

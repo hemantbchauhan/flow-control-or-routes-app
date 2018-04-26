@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ws="http://www.mulesoft.org/schema/mule/ws"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+
+
+    
+    <ws:consumer-config name="Web_Service_Consumer" wsdlLocation="http://ilt.mulesoft-training.com/essentials/delta?wsdl" service="TicketServiceService" port="TicketServicePort" serviceAddress="http://training.cloudhub.io/essentials/delta" doc:name="Web Service Consumer"/>
+    <http:request-config name="UnitedAirlines_Connection" host="ilt.mulesoft-training.com" port="80" doc:name="HTTP Request Configuration"/>
+     
+     
+    <flow name="scatter-gather-exampleFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/flights" doc:name="HTTP"/>
+        <scatter-gather doc:name="Scatter-Gather">
+            <processor-chain>
+                <ws:consumer config-ref="Web_Service_Consumer" operation="listAllFlights" doc:name="Web Service Consumer"/>
+                <dw:transform-message doc:name="Transform Message" >
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+%namespace ns0 http://soap.training.mulesoft.com/
+---
+payload.ns0#listAllFlightsResponse.*return map ((return , indexOfReturn) -> {
+    airline: return.airlineName,
+    flightCode: return.code,
+    fromAirportCode: return.origin,
+    toAirportCode: return.destination,
+    departureDate: return.departureDate,
+    emptySeats: return.emptySeats,
+    price: return.price,
+    planeType: return.planeType
+})]]></dw:set-payload>
+                </dw:transform-message>
+            </processor-chain>
+            <processor-chain>
+                <http:request config-ref="UnitedAirlines_Connection" path="/essentials/united/flights" method="GET" doc:name="HTTP"/>
+                <dw:transform-message doc:name="Transform Message" >
+                    <dw:input-payload mimeType="application/json"/>
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload.flights map ((flight , indexOfFlight) -> {
+    airline: flight.airlineName,
+    flightCode: flight.code,
+    fromAirportCode: flight.origin,
+    toAirportCode: flight.destination,
+    departureDate: flight.departureDate,
+    emptySeats: flight.emptySeats,
+    price: flight.price,
+    planeType: flight.planeType
+})]]></dw:set-payload>
+                </dw:transform-message>
+            </processor-chain>
+</scatter-gather>
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+flatten payload]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+
+</mule>

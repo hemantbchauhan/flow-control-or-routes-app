@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    
+    
+   
+    <http:request-config name="HTTP_Request_Configuration" host="localhost" port="8081" doc:name="HTTP Request Configuration"/>
+     
+    <flow name="CallServicesFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/scattergather" doc:name="HTTP"/>
+        <scatter-gather  doc:name="Call booking services Scatter-Gather" timeout="1000">
+            <custom-aggregation-strategy class="com.hemant.scattergather.ProcessCollectedAggregationStrategy"/>
+            <processor-chain>
+                <http:request config-ref="HTTP_Request_Configuration" path="/booking" method="GET" doc:name="Call Booking.com"/>
+                <json:json-to-object-transformer returnClass="java.util.List" doc:name="JSON Results to Java List"/>
+            </processor-chain>
+            <processor-chain>
+                <http:request config-ref="HTTP_Request_Configuration" path="/expedia" method="GET" doc:name="Call Expedia"/>
+                <json:json-to-object-transformer returnClass="java.util.List" doc:name="JSON Results to Java List"/>
+            </processor-chain>
+            <processor-chain>
+                <http:request config-ref="HTTP_Request_Configuration" path="/orbitz" method="GET" doc:name="Call Orbitz"/>
+                <json:json-to-object-transformer returnClass="java.util.List" doc:name="JSON Results to Java List"/>
+            </processor-chain>
+        </scatter-gather>
+        <combine-collections-transformer doc:name="Combine Results"/>
+    	<json:object-to-json-transformer doc:name="Object to JSON"/>   
+    </flow>
+</mule>

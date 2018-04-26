@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <flow name="BookingDotComServiceFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/booking" doc:name="HTTP"/>
+        <custom-processor class="com.hemant.scattergather.services.BookingResultsBuilder" doc:name="BookingDotComResultsBuilder" name="BookingDotComResultsBuilder"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    
+    <flow name="ExpediaServiceFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/expedia" doc:name="HTTP"/>
+        <custom-processor class="com.hemant.scattergather.services.ExpediaResultsBuilder" doc:name="BuildExpediaResultsMessageProcessor" name="BuildExpediaResultsMessageProcessor"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <expression-component doc:name="Expression"><![CDATA[Thread.sleep(10000);]]></expression-component>
+    </flow>
+    
+    <flow name="OrbitzServiceFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/orbitz" doc:name="HTTP"/>
+        <custom-processor class="com.hemant.scattergather.services.OrbitzResultsBuilder" doc:name="BuildOrbitzResultsMessageProcessor" name="BuildOrbitzResultsMessageProcessor"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+</mule>

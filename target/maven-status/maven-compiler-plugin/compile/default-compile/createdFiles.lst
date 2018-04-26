@@ -1,0 +1,6 @@
+com\hemant\scattergather\services\OrbitzResultsBuilder.class
+com\hemant\scattergather\ProcessCollectedAggregationStrategy.class
+com\hemant\scattergather\services\ExpediaResultsBuilder.class
+com\hemant\scattergather\ResultsBuilder.class
+com\hemant\scattergather\services\BookingResultsBuilder.class
+com\hemant\scattergather\Result.class
