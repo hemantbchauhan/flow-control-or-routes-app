@@ -7,7 +7,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>mule</packaging>
 	<name>Mule flow-control-or-routes-app Application</name>
-
+	<!--
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -15,6 +15,12 @@
 		<mule.version>3.9.0</mule.version>
     	<mule.tools.version>1.2</mule.tools.version>
 	</properties>
+	-->
+	<parent>
+		<groupId>com.xoriant</groupId>
+		<artifactId>mule-maven-parent-pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 
 	<build>
 		<plugins>
@@ -54,7 +60,7 @@
 					</execution>
 				</executions>
 			</plugin>
-		<!--  Deploy in Cloudhub -->	
+		<!--  Deploy in Cloudhub 	
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
 				<artifactId>mule-maven-plugin</artifactId>
@@ -71,10 +77,10 @@
 					<uri>https://anypoint.mulesoft.com</uri>
 					<redeploy>true</redeploy>
 					<workerType>Micro</workerType>
-					<!-- 
+					
 					<anypoint.platform.client_id>206dc27b04734342a3c2a242b1a977f4</anypoint.platform.client_id>
         			<anypoint.platform.client_secret>895076088A7B4618A6367d159FF298Fc</anypoint.platform.client_secret>
-        			-->
+        			
 				</configuration>
 				<executions>
 					<execution>
@@ -86,7 +92,7 @@
 					</execution>
 				</executions>
 			</plugin>
-		<!--  Deploy in Cloudhub -->				
+		  Deploy in Cloudhub -->				
 		</plugins>
 	</build>
 
