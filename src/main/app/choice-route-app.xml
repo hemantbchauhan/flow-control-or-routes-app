@@ -19,7 +19,7 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
                 <logger message="logger 2" level="ERROR" doc:name="Logger"/>
             </when>
             <when expression="#[message.payload['type'] == 'escalated']">
-                <logger message="logger 3" level="ERROR" doc:name="Logger"/>
+                <logger message="logger :: 3" level="ERROR" doc:name="Logger"/>
             </when>
             <otherwise>
                 <logger message="logger 4" level="ERROR" doc:name="Logger"/>
