@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Deploy Standalone') {
       steps {
-        sh 'mvn deploy -P standalone -Dmule.home=D:\Hemant\Mulesoft\mule-enterprise-standalone-3.9.0'
+        sh 'mvn deploy -P standalone -Dmule.home=D:/Hemant/Mulesoft/mule-enterprise-standalone-3.9.0'
       }
     }
     stage('Deploy ARM') {
