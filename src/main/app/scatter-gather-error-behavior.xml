@@ -20,7 +20,7 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
              <set-payload value="#['Bye Choice']" doc:name="Set Payload" />
              <set-payload value="#['Default']" doc:name="Set Payload" />
          </scatter-gather>
-         <logger level="INFO" doc:name="Logger" message="Scatter - Gather executed successfully"/>
+         <logger level="INFO" doc:name="Logger" message="Scatter -Gather executed successfully"/>
          
          <choice-exception-strategy doc:name="Choice Exception Strategy">
              <catch-exception-strategy
